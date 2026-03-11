@@ -17,18 +17,24 @@ To use this module, add it to the modules array in the `config/config.js` file:
 modules: [
 	{
 		module: 'MMM-TodoistDC',
-		position: 'top_right',	// This can be any of the regions. Best results in left or right regions.
+		position: 'top_center',	// This can be any of the regions. Best results in left or right regions.
 		header: 'Todoist', // This is optional
 		config: { // See 'Configuration options' for more information.
 			hideWhenEmpty: false,
-			accessToken: 'accessToken from Todoist',
+			accessToken: 'YOUR_TODOIST_ACCESS_TOKEN',  // Never commit real tokens; revoke if exposed.
 			maximumEntries: 60,
 			updateInterval: 10*60*1000, // Update every 10 minutes
-			fade: false,      
+			fade: false,
+			// Do NOT set apiVersion/apiBase/todoistEndpoint unless you know you need Sync API v9.
+			// This module uses the Todoist Sync API (defaults: apiBase "https://api.todoist.com/sync", apiVersion "v9").
 			// projects and/or labels is mandatory:
-			projects: [ '7vBnR3cQwY6fM1sP' ], 
-			labels: [ "MagicMirror", "Important" ] // Tasks for any projects with these labels will be shown.
-      }
+			projects: [ '7vBnR3cQwY6fM1sP' ],
+			labels: [ "MagicMirror", "Important" ],
+			sortType: "dueDateDescPriority",
+			maxTitleLength: 1000,
+			wrapEvents: false,
+			showProject: false
+		}
 	}
 ]
 ````

@@ -30,7 +30,7 @@
 //UserPresence Management (PIR sensor)
 var UserPresence = true; //true by default, so no impact for user without a PIR sensor
 
-Module.register("MMM-TodoistDC", {
+Module.register("MMM-TodoistDC-archive", {
 
 		defaults: {
 		maximumEntries: 10,
@@ -97,7 +97,7 @@ Module.register("MMM-TodoistDC", {
 
 	// Define required scripts.
 	getStyles: function () {
-		return ["MMM-Todoist.css"];
+		return ["MMM-TodoistDC.css"];
 	},
 	getTranslations: function () {
 		return {
