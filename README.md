@@ -25,8 +25,8 @@ modules: [
 			maximumEntries: 60,
 			updateInterval: 10*60*1000, // Update every 10 minutes
 			fade: false,
-			// Do NOT set apiVersion/apiBase/todoistEndpoint unless you know you need Sync API v9.
-			// This module uses the Todoist Sync API (defaults: apiBase "https://api.todoist.com/sync", apiVersion "v9").
+			// Do NOT set apiVersion/apiBase/todoistEndpoint unless you know you need a different endpoint.
+			// This module uses the Todoist Sync API v1 (defaults: apiBase "https://api.todoist.com/api", apiVersion "v1").
 			// projects and/or labels is mandatory:
 			projects: [ '7vBnR3cQwY6fM1sP' ],
 			labels: [ "MagicMirror", "Important" ],

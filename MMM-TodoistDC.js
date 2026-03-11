@@ -80,11 +80,9 @@ Module.register("MMM-TodoistDC", {
 			49:'#ccac93'
 		},
 
-		//This has been designed to use the Todoist Sync API.
-		//Updated to use the current Sync API v9 endpoints:
-		//https://api.todoist.com/sync/v9/sync
-		apiVersion: "v9",
-		apiBase: "https://api.todoist.com/sync",
+		// Todoist Sync API (API v1): https://developer.todoist.com/api/v1/
+		apiVersion: "v1",
+		apiBase: "https://api.todoist.com/api",
 		todoistEndpoint: "sync",
 
 		todoistResourceType: "[\"items\", \"projects\", \"collaborators\", \"user\", \"labels\"]",
@@ -115,6 +113,7 @@ Module.register("MMM-TodoistDC", {
 		//to display "Loading..." at start-up
 		this.title = "Loading...";
 		this.loaded = false;
+		this.errorMessage = null;
 
 		if (!this.config.accessToken) {
 			Log.error("MMM-Todoist: AccessToken not set!");
@@ -230,6 +229,7 @@ Module.register("MMM-TodoistDC", {
 	// ******** Data sent from the Backend helper. This is the data from the Todoist API ************
 	socketNotificationReceived: function (notification, payload) {
 		if (notification === "TASKS") {
+			this.errorMessage = null; // clear any previous error
 			this.filterTodoistData(payload);
 
 			if (this.config.displayLastUpdate) {
@@ -240,7 +240,10 @@ Module.register("MMM-TodoistDC", {
 			this.loaded = true;
 			this.updateDom(1000);
 		} else if (notification === "FETCH_ERROR") {
-			Log.error("Todoist Error. Could not fetch todos: " + payload.error);
+			this.errorMessage = payload && payload.error ? payload.error : "Could not fetch todos";
+			Log.error("Todoist Error. Could not fetch todos: " + this.errorMessage);
+			this.loaded = true; // leave loading state so user sees error instead of stuck "Loading..."
+			this.updateDom(1000);
 		}
 	},
 
@@ -627,6 +630,13 @@ Module.register("MMM-TodoistDC", {
 		//display "loading..." if not loaded
 		if (!this.loaded) {
 			wrapper.innerHTML = "Loading...";
+			wrapper.className = "dimmed light small";
+			return wrapper;
+		}
+
+		// show error message if last fetch failed
+		if (this.errorMessage) {
+			wrapper.textContent = "Todoist: " + this.errorMessage;
 			wrapper.className = "dimmed light small";
 			return wrapper;
 		}
