@@ -1,6 +1,6 @@
 
 # MMM-TodoistDC
-** Developer is not actively maintaining this Extension. **
+** This is a fork of the original MMM-Todoist for my personal testing. Wanted to see if I could fix it. To my shock and surprise it now works. No idea what to do with it now. **
 
 
 This an extension for the [MagicMirror](https://github.com/MichMich/MagicMirror). It can display your Todoist todos. You can add multiple instances with different lists. Only one account supported.
